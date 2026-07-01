@@ -13,7 +13,7 @@ Este documento describe como ejecutar una demo local integrada usando Docker Com
 Estructura esperada:
 
 ```text
-/Users/harrydouglass/Documents/
+workspace/
 ├── academic-management-api
 ├── academic-management-web
 └── cloud-native-academic-management-system
@@ -21,14 +21,22 @@ Estructura esperada:
 
 ## Configuracion inicial
 
-El `docker-compose.yml` usa los archivos `.env.example` por defecto para que la demo pueda validarse recien clonado el repositorio. Si necesitas valores locales personalizados, crea copias no versionadas:
+El `docker-compose.yml` usa archivos `.env` locales. Los archivos `.env.example` son plantillas versionadas y no deben utilizarse como configuracion real de ejecucion:
 
 ```bash
 cp env/backend.env.example env/backend.env
 cp env/frontend.env.example env/frontend.env
 ```
 
-Revisa las copias locales y ajusta credenciales, URL de aplicacion y configuracion de base de datos si fuera necesario. Si cambias a archivos locales, actualiza temporalmente `docker-compose.yml` o usa overrides de Compose.
+Revisa las copias locales y ajusta credenciales, URL de aplicacion y configuracion de base de datos si fuera necesario.
+
+Para generar una clave local de Laravel:
+
+```bash
+docker compose run --rm backend php artisan key:generate --show
+```
+
+Luego copia el valor generado en `APP_KEY` dentro de `env/backend.env`.
 
 ## Levantar servicios
 
@@ -44,6 +52,15 @@ Servicios principales:
 | Backend | `backend:8000` | `http://localhost:8000` |
 | Nginx proxy | `nginx:80` | `http://localhost:8088` |
 | PostgreSQL | `database:5432` | `localhost:5432` |
+
+## Modos de conexion del frontend con la API
+
+| Modo | `VITE_API_BASE_URL` | Uso recomendado |
+| --- | --- | --- |
+| Desarrollo directo | `http://localhost:8000/api` | Cuando el navegador consume directamente el backend publicado en el puerto 8000 |
+| Nginx gateway | `/api` | Cuando el frontend y la API se exponen detras del proxy `http://localhost:8088` |
+
+El valor por defecto de las plantillas usa `/api` para favorecer el modo gateway y evitar acoplar el frontend a un puerto local especifico.
 
 ## Verificacion
 
@@ -106,3 +123,5 @@ docker compose down -v
 ## Nota de alcance
 
 Este despliegue es local y demostrativo. La ejecucion en nube, Kubernetes, balanceadores administrados, certificados TLS e infraestructura como codigo quedan planificados para fases posteriores.
+
+El Dockerfile del backend usa `php artisan serve` porque esta orientado a demos locales integradas. Una imagen productiva deberia usar PHP-FPM con Nginx, Octane u otro runtime preparado para produccion, junto con hardening, health checks formales y gestion robusta de secretos.

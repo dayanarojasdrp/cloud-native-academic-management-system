@@ -15,7 +15,7 @@ jobs:
       - name: Checkout DevOps repository
         uses: actions/checkout@v4
         with:
-          path: devops
+          path: cloud-native-academic-management-system
 
       - name: Checkout backend repository
         uses: actions/checkout@v4
@@ -32,16 +32,16 @@ jobs:
       - name: Build backend image
         run: |
           docker build \
-            -f devops/docker/backend.Dockerfile \
+            -f cloud-native-academic-management-system/docker/backend.Dockerfile \
             -t academic-management-api:ci \
             academic-management-api
 
       - name: Build frontend image
         run: |
           docker build \
-            -f devops/docker/frontend.Dockerfile \
+            -f cloud-native-academic-management-system/docker/frontend.Dockerfile \
             -t academic-management-web:ci \
-            academic-management-web
+            .
 
       # Future publication example for GitHub Container Registry:
       #

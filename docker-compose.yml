@@ -26,7 +26,7 @@ services:
     container_name: academic_backend
     restart: unless-stopped
     env_file:
-      - ./env/backend.env.example
+      - ./env/backend.env
     ports:
       - "8000:8000"
     volumes:
@@ -39,16 +39,16 @@ services:
   # Frontend Vue servido como contenido estatico por Nginx.
   frontend:
     build:
-      context: ../academic-management-web
-      dockerfile: ../cloud-native-academic-management-system/docker/frontend.Dockerfile
+      context: ..
+      dockerfile: cloud-native-academic-management-system/docker/frontend.Dockerfile
       args:
-        VITE_API_BASE_URL: http://localhost:8000/api
+        VITE_API_BASE_URL: /api
         VITE_APP_NAME: Academic Management
         VITE_AUTH_MODE: sanctum
     container_name: academic_frontend
     restart: unless-stopped
     env_file:
-      - ./env/frontend.env.example
+      - ./env/frontend.env
     ports:
       - "8080:80"
     depends_on:
