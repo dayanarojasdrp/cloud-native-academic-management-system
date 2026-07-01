@@ -14,8 +14,13 @@ k8s/
 │   ├── frontend-*.yaml
 │   ├── ingress.yaml
 │   └── kustomization.yaml
-└── lab-postgres/
-    ├── postgres-*.yaml
+├── lab-postgres/
+│   ├── postgres-*.yaml
+│   └── kustomization.yaml
+└── observability/
+    ├── blackbox-*.yaml
+    ├── prometheus-*.yaml
+    ├── grafana-*.yaml
     └── kustomization.yaml
 ```
 
@@ -26,6 +31,8 @@ k8s/
 - Frontend Deployment, Service, ConfigMap, HPA and rolling update strategy.
 - Ingress routing `/api` to Laravel and `/` to Vue.
 - Local/lab PostgreSQL manifests with PersistentVolumeClaim.
+- NetworkPolicy baseline for backend and lab PostgreSQL.
+- Observability baseline with Blackbox Exporter, Prometheus, Grafana and simple alert rules.
 
 ## What you must provide before applying
 
@@ -35,6 +42,7 @@ k8s/
 4. Confirm that `/api/health` exists in the Laravel API.
 5. Install an ingress controller if the cluster does not already have one.
 6. Install metrics-server before relying on HPA.
+7. Use a CNI that enforces NetworkPolicy if network restrictions must be tested.
 
 ## Create secrets
 
@@ -68,6 +76,15 @@ Application plus local PostgreSQL for lab:
 kubectl apply -k k8s/lab-postgres
 ```
 
+Observability stack:
+
+```bash
+cp k8s/observability/grafana-secret.example.yaml /tmp/grafana-secret.yaml
+kubectl apply -f k8s/observability/namespace.yaml
+kubectl apply -f /tmp/grafana-secret.yaml
+kubectl apply -k k8s/observability
+```
+
 ## Verify rollout
 
 ```bash
@@ -93,4 +110,4 @@ Then configure your local host mapping according to the cluster tool you use.
 - The backend image must be changed to a production runtime before real use.
 - Secrets need a managed secret store or sealed-secret workflow.
 - PostgreSQL should be replaced by a managed database for production.
-- TLS, DNS, image scanning, backup policy and network policy are not implemented here.
+- TLS, DNS, image scanning, backup policy, Alertmanager and centralized logs are not implemented here.

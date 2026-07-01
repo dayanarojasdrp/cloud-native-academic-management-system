@@ -11,9 +11,8 @@ El roadmap organiza la evolucion del sistema academico desde una aplicacion func
 | Fase 1: aplicacion funcional | Construir las funcionalidades academicas base | Backend Laravel, frontend Vue, autenticacion, modulos academicos | Existente |
 | Fase 2: preparacion para produccion local | Mejorar configuracion, pruebas y estabilidad local | Variables, pruebas, ajustes de entorno, estructura por capas | En progreso |
 | Fase 3: integracion DevOps | Automatizar calidad, pruebas, builds y demo integrada | GitHub Actions, Dockerfiles, Docker Compose, documentacion cloud-native | Completada como baseline |
-| Fase 4: despliegue cloud-native | Demostrar ejecucion en arquitectura moderna | Kubernetes manifests, ingress, HPA, rolling updates, Terraform baseline | Actual |
-| Fase 5: infraestructura como codigo con Terraform | Provisionar infraestructura reproducible | VPC, subnets, base gestionada, cluster, IAM | Baseline incluido, ejecucion pendiente |
-| Fase 6: observabilidad y seguridad | Medir, alertar y fortalecer operacion | Prometheus, Grafana, logs, alertas, hardening, politicas | Planificado |
+| Fase 4: despliegue cloud-native | Demostrar ejecucion en arquitectura moderna | Kubernetes manifests, ingress, HPA, rolling updates, Terraform baseline | Completada como baseline |
+| Fase 5: observabilidad, seguridad y madurez | Medir, proteger y documentar la operacion | Prometheus, Grafana, alertas, security notes, CI/CD docs, contexto de investigacion | Actual |
 
 ## Fase 1: aplicacion funcional
 
@@ -45,20 +44,12 @@ El roadmap organiza la evolucion del sistema academico desde una aplicacion func
 
 **Entregables:** manifests Kubernetes, ingress, configmaps, secrets de ejemplo, HPA, rolling updates, namespace, PostgreSQL de laboratorio con PVC y baseline Terraform para AWS.
 
-**Estado:** fase actual con baseline implementado. Requiere imagenes publicadas, secrets reales, ingress controller y cluster de prueba para validacion completa.
+**Estado:** completada como baseline. Requiere imagenes publicadas, secrets reales, ingress controller, cluster de prueba y presupuesto aprobado antes de cualquier aplicacion real.
 
-## Fase 5: infraestructura como codigo con Terraform
+## Fase 5: observabilidad, seguridad y madurez
 
-**Objetivo:** provisionar recursos cloud de forma versionada y controlada.
+**Objetivo:** que el prototipo se vea como un sistema cloud-native serio, no solo como una aplicacion desplegable.
 
-**Entregables:** modulos Terraform para red, seguridad, base gestionada, cluster Kubernetes y permisos IAM.
+**Entregables:** baseline Prometheus/Grafana, dashboard de salud de API, alertas simples, controles de secretos, network policies, rate limiting inicial, documentacion de seguridad, CI/CD y contexto de investigacion.
 
-**Estado:** baseline modular incluido. No debe ejecutarse sin aprobacion de presupuesto, region, cuenta AWS y estrategia de estado remoto.
-
-## Fase 6: observabilidad y seguridad
-
-**Objetivo:** operar el sistema con indicadores tecnicos y academicos.
-
-**Entregables:** metricas, dashboards, logs centralizados, alertas, auditoria, gestion de secretos y politicas de seguridad.
-
-**Estado:** planificado.
+**Estado:** baseline implementado. Quedan pendientes instrumentacion real de metricas de negocio, logs centralizados, Alertmanager y validacion en cluster.

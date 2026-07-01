@@ -14,8 +14,9 @@ La arquitectura responde a una necesidad frecuente en instituciones de educacion
 | Backend | Laravel REST API | Servicios de dominio, autenticacion, reglas academicas y acceso a datos |
 | Base de datos | PostgreSQL recomendado | Persistencia transaccional de informacion academica |
 | DevOps | GitHub Actions, Docker, Docker Compose | Automatizacion de calidad, builds y entorno reproducible |
-| Cloud futuro | Kubernetes, Terraform | Orquestacion e infraestructura como codigo |
-| Observabilidad futura | Prometheus, Grafana, logs, alertas | Medicion operacional y supervision del sistema |
+| Cloud | Kubernetes, Terraform | Baseline de orquestacion e infraestructura como codigo |
+| Observabilidad | Prometheus, Grafana, health checks, alertas | Baseline de supervision operativa |
+| Seguridad | Secrets, NetworkPolicy, IAM, security groups, CORS documentado | Controles iniciales de hardening |
 
 ## Flujo funcional
 
@@ -25,6 +26,7 @@ La arquitectura responde a una necesidad frecuente en instituciones de educacion
 4. La API consulta y persiste informacion en la base de datos.
 5. Los servicios academicos gestionan estudiantes, matriculas, pagos, notas y certificados.
 6. La capa DevOps automatiza pruebas, empaquetado y preparacion de despliegue.
+7. La capa de observabilidad y seguridad permite medir salud operativa y documentar controles antes de una migracion real.
 
 ## Vistas arquitectonicas recomendadas
 
@@ -38,5 +40,6 @@ La lista sugerida esta documentada en [RECOMMENDED_DIAGRAMS.md](RECOMMENDED_DIAG
 - Portabilidad mediante contenedores.
 - Automatizacion de validaciones con CI.
 - Preparacion progresiva para Kubernetes e infraestructura como codigo.
+- Seguridad y observabilidad tratadas como parte de la arquitectura, no como anexos.
 - Documentacion de decisiones para trazabilidad tecnica y academica.
 - Evolucion incremental para evitar costos cloud antes de la fase de despliegue real.
