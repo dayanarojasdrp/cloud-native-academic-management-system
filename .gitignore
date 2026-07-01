@@ -10,3 +10,9 @@ env/*.env
 # Local logs and temporary files.
 *.log
 tmp/
+
+# Terraform local state and provider cache.
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan

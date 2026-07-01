@@ -1,0 +1,5 @@
+aws_region  = "us-east-1"
+environment = "dev"
+
+# Keep this false until AWS cost, account and deployment decisions are approved.
+create_eks = false
