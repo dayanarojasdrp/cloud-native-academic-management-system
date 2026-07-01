@@ -26,40 +26,11 @@ La arquitectura responde a una necesidad frecuente en instituciones de educacion
 5. Los servicios academicos gestionan estudiantes, matriculas, pagos, notas y certificados.
 6. La capa DevOps automatiza pruebas, empaquetado y preparacion de despliegue.
 
-## Diagrama
+## Vistas arquitectonicas recomendadas
 
-```mermaid
-flowchart TD
-    U[Usuario academico] --> F[Frontend Vue.js]
-    F --> A[Laravel REST API]
-    A --> DB[(Base de datos PostgreSQL)]
+Este repositorio no incluye diagramas renderizados en esta fase. Para una presentacion profesional se recomienda construirlos como artefactos separados, siguiendo vistas arquitectonicas con proposito claro: contexto, contenedores, despliegue, DevOps, seguridad y observabilidad.
 
-    A --> S[Servicios academicos]
-    S --> E[Estudiantes]
-    S --> M[Matricula]
-    S --> P[Pagos]
-    S --> N[Notas]
-    S --> C[Certificados]
-
-    subgraph DevOps["Capa DevOps y Cloud-Native"]
-        GH[GitHub Actions]
-        D[Docker]
-        DC[Docker Compose]
-        K[Kubernetes futuro]
-        T[Terraform futuro]
-        O[Observabilidad futura]
-    end
-
-    GH --> D
-    D --> DC
-    DC --> F
-    DC --> A
-    DC --> DB
-    K -. planificado .-> F
-    K -. planificado .-> A
-    T -. planificado .-> K
-    O -. planificado .-> A
-```
+La lista sugerida esta documentada en [RECOMMENDED_DIAGRAMS.md](RECOMMENDED_DIAGRAMS.md).
 
 ## Criterios arquitectonicos
 

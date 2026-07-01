@@ -1,5 +1,9 @@
 # Cloud-Native Academic Management System
 
+![Backend CI](https://github.com/dayanarojasdrp/cloud-native-academic-management-system/actions/workflows/backend-ci.yml/badge.svg)
+![Frontend CI](https://github.com/dayanarojasdrp/cloud-native-academic-management-system/actions/workflows/frontend-ci.yml/badge.svg)
+![Docker Build](https://github.com/dayanarojasdrp/cloud-native-academic-management-system/actions/workflows/docker-build.yml/badge.svg)
+
 Repositorio central de arquitectura, integracion DevOps y preparacion cloud-native para un sistema academico orientado a instituciones de educacion superior.
 
 El proyecto no solo desarrolla una aplicacion academica; tambien automatiza como se prueba, se empaqueta y se prepara para desplegarse en una arquitectura cloud-native.
@@ -18,43 +22,6 @@ Desde una perspectiva academica, este repositorio puede sustentar una investigac
 | Frontend | [Sunaymg04/academic-management-web](https://github.com/Sunaymg04/academic-management-web) | Vue.js | Interfaz de usuario para gestion academica |
 | DevOps/Cloud | [dayanarojasdrp/cloud-native-academic-management-system](https://github.com/dayanarojasdrp/cloud-native-academic-management-system) | Docker, GitHub Actions, documentacion cloud-native | Integracion, calidad, empaquetado, arquitectura y roadmap cloud |
 
-## Arquitectura general
-
-```mermaid
-flowchart TD
-    U[Usuario academico] --> F[Frontend Vue.js]
-    F --> A[Laravel REST API]
-    A --> DB[(Base de datos)]
-
-    A --> S[Servicios academicos]
-    S --> E[Estudiantes]
-    S --> M[Matricula]
-    S --> P[Pagos]
-    S --> N[Notas]
-    S --> C[Certificados]
-
-    subgraph DevOps["Capa DevOps y Cloud-Native"]
-        GH[GitHub Actions CI]
-        D[Docker]
-        DC[Docker Compose]
-        K[Kubernetes futuro]
-        T[Terraform futuro]
-        O[Observabilidad futura]
-    end
-
-    GH --> D
-    D --> DC
-    DC --> F
-    DC --> A
-    DC --> DB
-    K -. planificado .-> F
-    K -. planificado .-> A
-    T -. planificado .-> K
-    O -. planificado .-> A
-```
-
-El archivo fuente del diagrama esta en [diagrams/architecture.mmd](diagrams/architecture.mmd).
-
 ## Fase 3: Integracion DevOps
 
 Esta fase convierte el proyecto en una base preparada para evolucionar hacia nube. La prioridad no es desplegar todavia en Kubernetes ni crear infraestructura real en AWS, sino establecer los artefactos que hacen posible una migracion disciplinada:
@@ -64,6 +31,8 @@ Esta fase convierte el proyecto en una base preparada para evolucionar hacia nub
 - Entorno local integrado con Docker Compose.
 - Documentacion tecnica para despliegue, variables, decisiones y roadmap.
 - Planes formales para Kubernetes, Terraform y observabilidad.
+
+Los workflows incluidos validan el sistema integrado desde el repositorio DevOps. En fases posteriores, workflows equivalentes deben vivir tambien dentro de los repositorios backend y frontend para validar cambios en cada aplicacion desde su propio ciclo de desarrollo.
 
 ## Tecnologias consideradas
 
@@ -102,12 +71,17 @@ cloud-native-academic-management-system/
 │   ├── ENVIRONMENT_VARIABLES.md
 │   ├── DECISIONS.md
 │   ├── CLOUD_NATIVE_ROADMAP.md
+│   ├── CURRENT_LIMITATIONS.md
 │   ├── KUBERNETES_PLAN.md
+│   ├── NEXT_STEPS.md
+│   ├── RECOMMENDED_DIAGRAMS.md
+│   ├── SECURITY_NOTES.md
 │   ├── TERRAFORM_PLAN.md
 │   └── OBSERVABILITY_PLAN.md
 ├── docker/
 │   ├── backend.Dockerfile
 │   ├── frontend.Dockerfile
+│   ├── frontend-nginx.conf
 │   └── nginx.conf
 ├── docker-compose.yml
 ├── .github/
@@ -118,8 +92,6 @@ cloud-native-academic-management-system/
 ├── env/
 │   ├── backend.env.example
 │   └── frontend.env.example
-└── diagrams/
-    └── architecture.mmd
 ```
 
 ## Ejecucion local integrada
@@ -127,7 +99,7 @@ cloud-native-academic-management-system/
 Este repositorio asume que los repositorios de backend y frontend existen como directorios hermanos:
 
 ```text
-/Users/harrydouglass/Documents/
+workspace/
 ├── academic-management-api
 ├── academic-management-web
 └── cloud-native-academic-management-system
@@ -143,6 +115,16 @@ docker compose up --build
 
 Mas detalles en [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
+## Current Limitations
+
+- Kubernetes manifests are not implemented yet.
+- Terraform modules are documented but not executed.
+- Observability stack is planned but not instrumented.
+- Docker Compose is intended for local integration only.
+- Production deployment requires additional hardening.
+
+See [docs/CURRENT_LIMITATIONS.md](docs/CURRENT_LIMITATIONS.md) for the detailed scope boundaries.
+
 ## Documentacion principal
 
 - [Arquitectura](docs/ARCHITECTURE.md)
@@ -151,6 +133,10 @@ Mas detalles en [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 - [Variables de entorno](docs/ENVIRONMENT_VARIABLES.md)
 - [Decisiones tecnicas](docs/DECISIONS.md)
 - [Roadmap cloud-native](docs/CLOUD_NATIVE_ROADMAP.md)
+- [Limitaciones actuales](docs/CURRENT_LIMITATIONS.md)
+- [Proximos pasos](docs/NEXT_STEPS.md)
+- [Notas de seguridad](docs/SECURITY_NOTES.md)
+- [Diagramas recomendados](docs/RECOMMENDED_DIAGRAMS.md)
 - [Plan Kubernetes](docs/KUBERNETES_PLAN.md)
 - [Plan Terraform](docs/TERRAFORM_PLAN.md)
 - [Plan de observabilidad](docs/OBSERVABILITY_PLAN.md)

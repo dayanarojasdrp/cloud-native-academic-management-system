@@ -29,6 +29,8 @@ La integracion DevOps incluye:
 
 ## Pipelines
 
+Los workflows de este repositorio validan el sistema desde una perspectiva de integracion central. En esta fase, eso permite demostrar coordinacion DevOps entre backend, frontend y empaquetado Docker. En fases posteriores, los repositorios `academic-management-api` y `academic-management-web` deberian incorporar sus propios workflows nativos para ejecutar CI inmediatamente cuando cambie cada base de codigo.
+
 ### Backend CI
 
 Valida el repositorio Laravel mediante instalacion de dependencias, configuracion de entorno de prueba, migraciones SQLite, pruebas automatizadas y Laravel Pint cuando esta disponible.
@@ -40,6 +42,13 @@ Valida el repositorio Vue mediante instalacion de dependencias, lint si existe y
 ### Docker Build
 
 Construye imagenes de backend y frontend desde los Dockerfiles del repositorio DevOps. Por defecto no publica imagenes; se deja preparado para una fase posterior con GitHub Container Registry.
+
+## Limitaciones conscientes
+
+- Los pipelines viven en el repositorio DevOps y no sustituyen todavia el CI propio de cada repositorio de aplicacion.
+- Las imagenes Docker estan orientadas a validacion y demo local, no a produccion.
+- La publicacion de imagenes en un registry queda desactivada por defecto.
+- Kubernetes, Terraform y observabilidad se mantienen como planes documentados hasta que la base de aplicacion este lista para despliegue real.
 
 ## Resultado esperado
 
