@@ -10,7 +10,7 @@ Los secretos reales no deben subirse al repositorio. Este proyecto versiona solo
 | --- | --- | --- |
 | `APP_NAME` | `AcademicManagementAPI` | Nombre logico de la aplicacion |
 | `APP_ENV` | `local` | Ambiente de ejecucion |
-| `APP_KEY` | `base64:...` | Clave de aplicacion Laravel |
+| `APP_KEY` | `base64:replace_this_with_local_generated_key` | Clave de aplicacion Laravel generada localmente |
 | `APP_DEBUG` | `true` | Modo debug para desarrollo |
 | `APP_URL` | `http://localhost:8000` | URL publica del backend |
 | `LOG_CHANNEL` | `stack` | Canal de logs Laravel |
@@ -30,8 +30,15 @@ Los secretos reales no deben subirse al repositorio. Este proyecto versiona solo
 | Variable | Ejemplo | Descripcion |
 | --- | --- | --- |
 | `VITE_APP_NAME` | `Academic Management` | Nombre visible de la aplicacion |
-| `VITE_API_BASE_URL` | `http://localhost:8000/api` | Base URL de la API |
+| `VITE_API_BASE_URL` | `/api` | Base URL de la API cuando se usa el gateway Nginx |
 | `VITE_AUTH_MODE` | `sanctum` | Modo de autenticacion esperado |
+
+Modos recomendados:
+
+| Modo | Valor |
+| --- | --- |
+| Desarrollo directo contra backend local | `http://localhost:8000/api` |
+| Gateway Nginx / entrada unificada | `/api` |
 
 Si el frontend utiliza Vue CLI en lugar de Vite, se debe mapear la variable de API al prefijo requerido por ese stack, por ejemplo `VUE_APP_API_BASE_URL`.
 
