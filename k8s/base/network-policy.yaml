@@ -1,0 +1,55 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-ingress-policy
+  namespace: academic-management
+  labels:
+    app.kubernetes.io/name: academic-management-api
+    app.kubernetes.io/part-of: academic-management
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: academic-management-api
+      app.kubernetes.io/component: backend
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: academic-management-web
+              app.kubernetes.io/component: frontend
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: ingress-nginx
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: academic-observability
+      ports:
+        - protocol: TCP
+          port: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: postgres-ingress-policy
+  namespace: academic-management
+  labels:
+    app.kubernetes.io/name: academic-postgres
+    app.kubernetes.io/part-of: academic-management
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: academic-postgres
+      app.kubernetes.io/component: database
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: academic-management-api
+              app.kubernetes.io/component: backend
+      ports:
+        - protocol: TCP
+          port: 5432

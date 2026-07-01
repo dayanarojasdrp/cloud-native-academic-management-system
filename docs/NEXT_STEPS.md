@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Este documento organiza el trabajo posterior a la Fase 3 para convertir la base DevOps actual en una migracion cloud-native progresiva y defendible academicamente.
+Este documento organiza el trabajo posterior al baseline cloud-native para convertir el prototipo en una migracion progresiva y defendible academicamente.
 
 ## Prioridad 1: fortalecer backend y frontend
 
@@ -39,11 +39,13 @@ Este documento organiza el trabajo posterior a la Fase 3 para convertir la base 
 
 ## Prioridad 5: observabilidad y seguridad
 
-- Instrumentar metricas tecnicas y academicas.
+- Instrumentar metricas tecnicas y academicas reales en Laravel.
 - Centralizar logs sin exponer datos sensibles.
+- Agregar Alertmanager y definir canales de notificacion.
 - Definir dashboards para disponibilidad, errores, latencia y procesos academicos.
 - Incorporar revision de dependencias y escaneo de imagenes.
 - Documentar riesgos y controles de seguridad.
+- Probar las network policies en un cluster con CNI compatible.
 
 ## Resultado esperado
 
