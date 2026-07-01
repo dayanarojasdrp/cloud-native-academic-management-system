@@ -1,0 +1,12 @@
+# Local environment overrides. Keep real secrets out of Git.
+env/*.env
+!env/*.env.example
+
+# Operating system and editor files.
+.DS_Store
+.idea/
+.vscode/
+
+# Local logs and temporary files.
+*.log
+tmp/
