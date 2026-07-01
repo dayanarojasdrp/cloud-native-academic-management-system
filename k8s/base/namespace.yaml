@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: academic-management
+  labels:
+    app.kubernetes.io/part-of: academic-management
+    environment: lab

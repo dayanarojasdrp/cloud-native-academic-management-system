@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: academic-frontend
+  namespace: academic-management
+  labels:
+    app.kubernetes.io/name: academic-management-web
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: academic-management
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: academic-management-web
+    app.kubernetes.io/component: frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

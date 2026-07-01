@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: academic-postgres
+  namespace: academic-management
+  labels:
+    app.kubernetes.io/name: academic-postgres
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: academic-management
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: academic-postgres
+    app.kubernetes.io/component: database
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: postgres

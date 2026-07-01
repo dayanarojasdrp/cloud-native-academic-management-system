@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: academic-backend-config
+  namespace: academic-management
+  labels:
+    app.kubernetes.io/name: academic-management-api
+    app.kubernetes.io/part-of: academic-management
+data:
+  APP_NAME: AcademicManagementAPI
+  APP_ENV: production
+  APP_DEBUG: "false"
+  APP_URL: http://academic.local
+  LOG_CHANNEL: stderr
+  LOG_LEVEL: info
+  DB_CONNECTION: pgsql
+  DB_HOST: academic-postgres
+  DB_PORT: "5432"
+  DB_DATABASE: academic_management
+  SESSION_DRIVER: database
+  CACHE_STORE: database
+  QUEUE_CONNECTION: database
+  FRONTEND_URL: http://academic.local
+  SANCTUM_STATEFUL_DOMAINS: academic.local
