@@ -22,17 +22,18 @@ Desde una perspectiva academica, este repositorio puede sustentar una investigac
 | Frontend | [Sunaymg04/academic-management-web](https://github.com/Sunaymg04/academic-management-web) | Vue.js | Interfaz de usuario para gestion academica |
 | DevOps/Cloud | [dayanarojasdrp/cloud-native-academic-management-system](https://github.com/dayanarojasdrp/cloud-native-academic-management-system) | Docker, GitHub Actions, documentacion cloud-native | Integracion, calidad, empaquetado, arquitectura y roadmap cloud |
 
-## Fase 3: Integracion DevOps
+## Fase 3 y Fase 4
 
-Esta fase convierte el proyecto en una base preparada para evolucionar hacia nube. La prioridad no es desplegar todavia en Kubernetes ni crear infraestructura real en AWS, sino establecer los artefactos que hacen posible una migracion disciplinada:
+La Fase 3 convierte el proyecto en una base preparada para evolucionar hacia nube. La prioridad es establecer los artefactos que hacen posible una migracion disciplinada:
 
 - Pipelines de integracion continua para backend y frontend.
 - Construccion reproducible de imagenes Docker.
 - Entorno local integrado con Docker Compose.
 - Documentacion tecnica para despliegue, variables, decisiones y roadmap.
-- Planes formales para Kubernetes, Terraform y observabilidad.
 
 Los workflows incluidos validan el sistema integrado desde el repositorio DevOps. En fases posteriores, workflows equivalentes deben vivir tambien dentro de los repositorios backend y frontend para validar cambios en cada aplicacion desde su propio ciclo de desarrollo.
+
+La Fase 4 agrega una base cloud-native: manifiestos Kubernetes para backend/frontend, PostgreSQL de laboratorio, HPA, rolling updates, ingress y una estructura Terraform inicial para AWS. Es una base de demostracion y revision tecnica, no una declaracion de produccion lista.
 
 ## Tecnologias consideradas
 
@@ -53,8 +54,8 @@ Los workflows incluidos validan el sistema integrado desde el repositorio DevOps
 | Repositorio DevOps/Cloud | Estructura base creada en esta fase |
 | Docker Compose | Preparado para demo local integrada |
 | GitHub Actions | Workflows base para CI y builds |
-| Kubernetes | Plan documentado, no implementado |
-| Terraform | Plan documentado, no ejecutado |
+| Kubernetes | Baseline de laboratorio incluido |
+| Terraform | Baseline AWS incluido, no aplicado |
 | Observabilidad | Plan documentado, pendiente de instrumentacion |
 
 Consulta [docs/CLOUD_NATIVE_ROADMAP.md](docs/CLOUD_NATIVE_ROADMAP.md) para la vision por fases.
@@ -73,6 +74,7 @@ cloud-native-academic-management-system/
 │   ├── CLOUD_NATIVE_ROADMAP.md
 │   ├── CURRENT_LIMITATIONS.md
 │   ├── KUBERNETES_PLAN.md
+│   ├── CLOUD_NATIVE_DEPLOYMENT.md
 │   ├── NEXT_STEPS.md
 │   ├── RECOMMENDED_DIAGRAMS.md
 │   ├── SECURITY_NOTES.md
@@ -92,6 +94,15 @@ cloud-native-academic-management-system/
 ├── env/
 │   ├── backend.env.example
 │   └── frontend.env.example
+├── k8s/
+│   ├── base/
+│   └── lab-postgres/
+├── terraform/
+│   ├── environments/
+│   └── modules/
+└── helm/
+    ├── academic-management-api/
+    └── academic-management-web/
 ```
 
 ## Ejecucion local integrada
@@ -117,8 +128,8 @@ Mas detalles en [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ## Current Limitations
 
-- Kubernetes manifests are not implemented yet.
-- Terraform modules are documented but not executed.
+- Kubernetes manifests are a lab baseline, not a hardened production release.
+- Terraform modules are included but not executed.
 - Observability stack is planned but not instrumented.
 - Docker Compose is intended for local integration only.
 - Production deployment requires additional hardening.
@@ -133,6 +144,7 @@ See [docs/CURRENT_LIMITATIONS.md](docs/CURRENT_LIMITATIONS.md) for the detailed 
 - [Variables de entorno](docs/ENVIRONMENT_VARIABLES.md)
 - [Decisiones tecnicas](docs/DECISIONS.md)
 - [Roadmap cloud-native](docs/CLOUD_NATIVE_ROADMAP.md)
+- [Despliegue cloud-native](docs/CLOUD_NATIVE_DEPLOYMENT.md)
 - [Limitaciones actuales](docs/CURRENT_LIMITATIONS.md)
 - [Proximos pasos](docs/NEXT_STEPS.md)
 - [Notas de seguridad](docs/SECURITY_NOTES.md)

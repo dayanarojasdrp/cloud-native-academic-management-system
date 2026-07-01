@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Definir la estrategia futura de infraestructura como codigo para desplegar el sistema academico en AWS. Esta fase es solo de planificacion: no se ejecutaran recursos cloud ni se generaran costos.
+Definir la estrategia de infraestructura como codigo para desplegar el sistema academico en AWS. Esta fase incluye un baseline Terraform revisable, pero no ejecuta recursos cloud ni debe generar costos.
 
 ## Proveedor objetivo
 
@@ -70,17 +70,16 @@ Esta etapa no debe crear infraestructura real. Antes de ejecutar Terraform se re
 - Destruir recursos no utilizados.
 - Evitar NAT Gateways o servicios administrados costosos si no son necesarios para la demostracion.
 
-## Estructura futura sugerida
+## Estructura incluida
 
 ```text
 terraform/
 ├── environments/
-│   ├── dev/
-│   ├── staging/
-│   └── production/
+│   └── dev/
 ├── modules/
 │   ├── network/
-│   ├── database/
+│   ├── security/
+│   ├── storage/
 │   ├── eks/
 │   └── iam/
 └── README.md
@@ -88,7 +87,7 @@ terraform/
 
 ## Criterio de entrada para implementar
 
-Terraform deberia implementarse cuando:
+Terraform deberia ejecutarse cuando:
 
 - La arquitectura Kubernetes este validada.
 - Las imagenes Docker se publiquen en un registry.

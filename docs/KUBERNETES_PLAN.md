@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Preparar el diseno de despliegue Kubernetes para una fase posterior. Este documento no implementa manifests todavia; define la arquitectura objetivo para ejecutar el sistema academico de forma orquestada, escalable y mantenible.
+Preparar y documentar el despliegue Kubernetes inicial del sistema academico. Esta fase incluye manifests base para laboratorio, pero aun requiere validacion en cluster, imagenes publicadas y secrets reales fuera del repositorio.
 
 ## Namespace
 
@@ -101,9 +101,9 @@ Helm puede incorporarse cuando los manifests crezcan:
 - Versionado de releases.
 - Integracion con GitOps.
 
-## Criterio de entrada para implementar
+## Criterio de entrada para validar en cluster
 
-Antes de crear manifests reales se recomienda tener:
+Antes de validar estos manifests se recomienda tener:
 
 - Imagenes Docker estables para backend y frontend.
 - Endpoint `/api/health`.
@@ -111,3 +111,7 @@ Antes de crear manifests reales se recomienda tener:
 - Migraciones controladas.
 - Estrategia de secretos.
 - Pipeline Docker validado.
+
+## Ubicacion de manifests
+
+Los manifests estan en [../k8s](../k8s). El overlay `lab-postgres` incluye una base de datos local con PVC para demostracion; en produccion se recomienda una base gestionada.

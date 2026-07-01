@@ -6,8 +6,8 @@ Este documento declara los limites conscientes de la Fase 3. En un proyecto acad
 
 ## Limitaciones de implementacion
 
-- Kubernetes manifests are not implemented yet.
-- Terraform modules are documented but not executed.
+- Kubernetes manifests are included as a lab baseline, not as a hardened production release.
+- Terraform modules are included but not executed.
 - Observability stack is planned but not instrumented.
 - Docker Compose is intended for local integration only.
 - Production deployment requires additional hardening.

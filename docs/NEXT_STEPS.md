@@ -21,10 +21,11 @@ Este documento organiza el trabajo posterior a la Fase 3 para convertir la base 
 - Documentar resultados de pruebas de humo.
 - Definir estrategia productiva para backend con PHP-FPM y Nginx u otro runtime robusto.
 
-## Prioridad 3: preparar despliegue cloud-native
+## Prioridad 3: validar despliegue cloud-native
 
-- Crear manifests Kubernetes en una fase separada.
-- Definir namespaces, services, ingress, configmaps y secrets.
+- Probar los manifests Kubernetes en kind, minikube o un cluster administrado de laboratorio.
+- Reemplazar imagenes `latest` por tags versionados.
+- Crear secrets reales fuera del repositorio.
 - Preparar estrategia de migraciones Laravel en Kubernetes.
 - Definir registry de imagenes.
 - Definir ambientes `dev`, `staging` y `production`.
@@ -33,7 +34,7 @@ Este documento organiza el trabajo posterior a la Fase 3 para convertir la base 
 
 - Definir region AWS objetivo.
 - Estimar costos antes de ejecutar recursos.
-- Crear modulos Terraform solo cuando haya presupuesto y alcance aprobados.
+- Revisar los modulos Terraform incluidos antes de cualquier ejecucion real.
 - Incluir alertas de billing antes de pruebas reales.
 
 ## Prioridad 5: observabilidad y seguridad
