@@ -1,0 +1,60 @@
+name: Docker Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  docker-build:
+    name: Build backend and frontend images
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout DevOps repository
+        uses: actions/checkout@v4
+        with:
+          path: devops
+
+      - name: Checkout backend repository
+        uses: actions/checkout@v4
+        with:
+          repository: dayanarojasdrp/academic-management-api
+          path: academic-management-api
+
+      - name: Checkout frontend repository
+        uses: actions/checkout@v4
+        with:
+          repository: Sunaymg04/academic-management-web
+          path: academic-management-web
+
+      - name: Build backend image
+        run: |
+          docker build \
+            -f devops/docker/backend.Dockerfile \
+            -t academic-management-api:ci \
+            academic-management-api
+
+      - name: Build frontend image
+        run: |
+          docker build \
+            -f devops/docker/frontend.Dockerfile \
+            -t academic-management-web:ci \
+            academic-management-web
+
+      # Future publication example for GitHub Container Registry:
+      #
+      # - name: Login to GitHub Container Registry
+      #   uses: docker/login-action@v3
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+      #
+      # - name: Tag and push images
+      #   run: |
+      #     docker tag academic-management-api:ci ghcr.io/${{ github.repository_owner }}/academic-management-api:${{ github.sha }}
+      #     docker tag academic-management-web:ci ghcr.io/${{ github.repository_owner }}/academic-management-web:${{ github.sha }}
+      #     docker push ghcr.io/${{ github.repository_owner }}/academic-management-api:${{ github.sha }}
+      #     docker push ghcr.io/${{ github.repository_owner }}/academic-management-web:${{ github.sha }}
