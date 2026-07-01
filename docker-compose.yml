@@ -1,0 +1,71 @@
+services:
+  # PostgreSQL local para demo e integracion. En produccion se recomienda una base gestionada.
+  database:
+    image: postgres:16-alpine
+    container_name: academic_database
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: academic_management
+      POSTGRES_USER: academic_user
+      POSTGRES_PASSWORD: academic_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U academic_user -d academic_management"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # API Laravel. El contexto apunta al repositorio backend como directorio hermano.
+  backend:
+    build:
+      context: ../academic-management-api
+      dockerfile: ../cloud-native-academic-management-system/docker/backend.Dockerfile
+    container_name: academic_backend
+    restart: unless-stopped
+    env_file:
+      - ./env/backend.env.example
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../academic-management-api:/var/www/html
+    depends_on:
+      database:
+        condition: service_healthy
+    command: sh -c "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000"
+
+  # Frontend Vue servido como contenido estatico por Nginx.
+  frontend:
+    build:
+      context: ../academic-management-web
+      dockerfile: ../cloud-native-academic-management-system/docker/frontend.Dockerfile
+      args:
+        VITE_API_BASE_URL: http://localhost:8000/api
+        VITE_APP_NAME: Academic Management
+        VITE_AUTH_MODE: sanctum
+    container_name: academic_frontend
+    restart: unless-stopped
+    env_file:
+      - ./env/frontend.env.example
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+  # Reverse proxy opcional para simular una entrada unica al sistema.
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: academic_gateway
+    restart: unless-stopped
+    ports:
+      - "8088:80"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - frontend
+      - backend
+
+volumes:
+  postgres_data:
