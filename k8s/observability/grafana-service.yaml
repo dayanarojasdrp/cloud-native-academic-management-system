@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: academic-observability
+  labels:
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/component: dashboard
+    app.kubernetes.io/part-of: academic-management
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/component: dashboard
+  ports:
+    - name: http
+      port: 3000
+      targetPort: http

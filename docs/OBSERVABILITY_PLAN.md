@@ -2,13 +2,14 @@
 
 ## Objetivo
 
-Definir una estrategia de observabilidad para operar el sistema academico con visibilidad tecnica y funcional. La observabilidad permitira detectar fallos, medir experiencia de usuario, analizar demanda y sostener decisiones de escalabilidad.
+Definir una estrategia de observabilidad para operar el sistema academico con visibilidad tecnica y funcional. El repositorio ya incluye un baseline de laboratorio con Prometheus, Blackbox Exporter y Grafana; la instrumentacion completa de metricas de aplicacion y logs queda para la siguiente iteracion.
 
 ## Componentes propuestos
 
 | Componente | Funcion |
 | --- | --- |
 | Prometheus | Recoleccion de metricas |
+| Blackbox Exporter | Verificacion HTTP de `/api/health` |
 | Grafana | Dashboards tecnicos y academicos |
 | Logs centralizados | Analisis de errores y auditoria |
 | Health checks | Verificacion automatica de disponibilidad |

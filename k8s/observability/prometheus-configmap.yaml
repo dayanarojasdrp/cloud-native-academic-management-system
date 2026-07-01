@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: academic-observability
+  labels:
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/part-of: academic-management
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+
+    rule_files:
+      - /etc/prometheus/rules/*.yml
+
+    scrape_configs:
+      - job_name: prometheus
+        static_configs:
+          - targets: ["localhost:9090"]
+
+      - job_name: academic-backend-health
+        metrics_path: /probe
+        params:
+          module: [http_2xx]
+        static_configs:
+          - targets:
+              - http://academic-backend.academic-management.svc.cluster.local:8000/api/health
+        relabel_configs:
+          - source_labels: [__address__]
+            target_label: __param_target
+          - source_labels: [__param_target]
+            target_label: instance
+          - target_label: __address__
+            replacement: blackbox-exporter.academic-observability.svc.cluster.local:9115
+
+      - job_name: kubernetes-pods
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+            action: keep
+            regex: "true"
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+            action: replace
+            target_label: __metrics_path__
+            regex: "(.+)"
+          - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+            action: replace
+            regex: "([^:]+)(?::\\d+)?;(\\d+)"
+            replacement: "$1:$2"
+            target_label: __address__
+
+  alert-rules.yml: |
+    groups:
+      - name: academic-management-api
+        rules:
+          - alert: AcademicBackendHealthProbeFailed
+            expr: probe_success{job="academic-backend-health"} == 0
+            for: 2m
+            labels:
+              severity: warning
+              service: academic-backend
+            annotations:
+              summary: "Academic backend health probe failed"
+              description: "The Laravel API health endpoint did not return a successful HTTP response."
